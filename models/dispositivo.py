@@ -1,8 +1,9 @@
-from peewee import Model, CharField, ForeignKeyField, AutoField, DoubleField
+from peewee import AutoField, CharField, DoubleField, ForeignKeyField, Model
 
 from config.database import database
-from models.residencia import Residencia
 from models.comodo import Comodo
+from models.residencia import Residencia
+
 
 class DispositivoEletrico(Model):
     id = AutoField()

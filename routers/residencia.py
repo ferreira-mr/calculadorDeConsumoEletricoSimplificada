@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Query
 
 from models.residencia import Residencia
-from schemas.residencia import ResidenciaCreate, ResidenciaRead, ResidenciaUpdate
+from schemas.residencia import (ResidenciaCreate, ResidenciaRead,
+                                ResidenciaUpdate)
 from utils.erros import residencia_not_found_error
 from utils.messages import residenci_deleted_message
 

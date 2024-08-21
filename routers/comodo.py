@@ -2,11 +2,9 @@ from fastapi import APIRouter, Query
 
 from models.comodo import Comodo
 from models.residencia import Residencia
-
-from schemas.comodo import ComodoCreate, ComodoUpdate, ComodoRead
-
+from schemas.comodo import ComodoCreate, ComodoRead, ComodoUpdate
 from utils.enuns import EnumGetComodos
-from utils.erros import residencia_not_found_error, comodo_not_found_error
+from utils.erros import comodo_not_found_error, residencia_not_found_error
 from utils.messages import comodo_deleted_message
 
 router = APIRouter(prefix="/comodos", tags=["Cômodos"])

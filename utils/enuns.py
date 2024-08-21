@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class EnumGetEletrodomesticos(Enum):
     comodo = "comodo"
     eletrodomestico = "dispositivo_eletrico"

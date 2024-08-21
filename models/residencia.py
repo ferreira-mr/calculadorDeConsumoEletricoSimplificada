@@ -1,7 +1,7 @@
-from peewee import Model, CharField, AutoField
-
+from peewee import AutoField, CharField, Model
 
 from config.database import database
+
 
 class Residencia(Model):
     id = AutoField()

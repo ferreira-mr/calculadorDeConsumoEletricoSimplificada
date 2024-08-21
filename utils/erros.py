@@ -1,5 +1,6 @@
 from fastapi import HTTPException, status
 
+
 def eletrodomestico_not_found_error():
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Eletrodomestico não encontrado")
 

@@ -1,15 +1,15 @@
 from fastapi import APIRouter, Query
 
-from models.dispositivo import DispositivoEletrico
 from models.comodo import Comodo
+from models.dispositivo import DispositivoEletrico
 from models.residencia import Residencia
-
-from schemas.dispositivo import EletrodomesticoCreate, EletrodomesticoUpdate, EletrodomesticoRead
-
-from utils.messages import eletrodomesticod_delete_message
-from utils.erros import comodo_not_found_error, residencia_not_found_error, eletrodomestico_not_found_error
+from schemas.dispositivo import (EletrodomesticoCreate, EletrodomesticoRead,
+                                 EletrodomesticoUpdate)
 from utils.enuns import EnumGetEletrodomesticos
-
+from utils.erros import (comodo_not_found_error,
+                         eletrodomestico_not_found_error,
+                         residencia_not_found_error)
+from utils.messages import eletrodomesticod_delete_message
 
 router = APIRouter(prefix="/eletrodomesticos", tags=["Eletrodomésticos"])
 

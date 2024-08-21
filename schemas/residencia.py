@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 from schemas.comodo import ComodoRead
 
+
 class ResidenciaCreate(BaseModel):
     proprietario: str
 

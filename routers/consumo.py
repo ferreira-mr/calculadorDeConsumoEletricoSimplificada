@@ -1,12 +1,14 @@
 from fastapi import APIRouter, Query
 
 from models.comodo import Comodo
-from models.residencia import Residencia
 from models.dispositivo import DispositivoEletrico
+from models.residencia import Residencia
 from schemas.consumo import ConsumoRead
 from services.consumo import calcular_consumo
-from utils.erros import comodo_not_found_error, residencia_not_found_error, eletrodomestico_not_found_error
 from utils.enuns import EnumOrigemDoConsumo
+from utils.erros import (comodo_not_found_error,
+                         eletrodomestico_not_found_error,
+                         residencia_not_found_error)
 
 router = APIRouter(prefix="/consumos", tags=["Consumos"])
 

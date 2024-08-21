@@ -1,7 +1,8 @@
-from peewee import Model, CharField, ForeignKeyField, AutoField
+from peewee import AutoField, CharField, ForeignKeyField, Model
 
 from config.database import database
 from models.residencia import Residencia
+
 
 class Comodo(Model):
     id = AutoField()

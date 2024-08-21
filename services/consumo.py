@@ -1,5 +1,6 @@
 from models.dispositivo import DispositivoEletrico
 
+
 def calcular_consumo(eletrodomesticos: list[DispositivoEletrico]):
 
     consumo_diario = sum(eletrodomestico.consumo * eletrodomestico.uso_diario for eletrodomestico in eletrodomesticos)
