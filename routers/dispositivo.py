@@ -3,17 +3,23 @@ from fastapi import APIRouter, Query
 from models.comodo import Comodo
 from models.dispositivo import DispositivoEletrico
 from models.residencia import Residencia
-from schemas.dispositivo import (EletrodomesticoCreate, EletrodomesticoRead,
-                                 EletrodomesticoUpdate)
+from schemas.dispositivo import (
+    EletrodomesticoCreate,
+    EletrodomesticoRead,
+    EletrodomesticoUpdate,
+)
 from utils.enuns import EnumGetEletrodomesticos
-from utils.erros import (comodo_not_found_error,
-                         eletrodomestico_not_found_error,
-                         residencia_not_found_error)
+from utils.erros import (
+    comodo_not_found_error,
+    eletrodomestico_not_found_error,
+    residencia_not_found_error,
+)
 from utils.messages import eletrodomesticod_delete_message
 
-router = APIRouter(prefix="/eletrodomesticos", tags=["Eletrodomésticos"])
+router = APIRouter(prefix='/eletrodomesticos', tags=['Eletrodomésticos'])
 
-@router.post("/", response_model=EletrodomesticoRead)
+
+@router.post('/', response_model=EletrodomesticoRead)
 def create_eletrodomestico(eletrodomestico: EletrodomesticoCreate):
 
     comodo = Comodo.get_or_none(Comodo.id == eletrodomestico.comodo_id)
@@ -31,14 +37,19 @@ def create_eletrodomestico(eletrodomestico: EletrodomesticoCreate):
     )
     return new_eletrodomestico
 
-@router.get("/", response_model=EletrodomesticoRead | list[EletrodomesticoRead])
+
+@router.get(
+    '/', response_model=EletrodomesticoRead | list[EletrodomesticoRead]
+)
 # @router.get("/")
 def get_item(
     item_type: EnumGetEletrodomesticos = Query(...),
     item_id: int = Query(...),
 ):
     if item_type == EnumGetEletrodomesticos.eletrodomestico:
-        eletrodomestico = DispositivoEletrico.get_or_none(DispositivoEletrico.id == item_id)
+        eletrodomestico = DispositivoEletrico.get_or_none(
+            DispositivoEletrico.id == item_id
+        )
 
         if not eletrodomestico:
             raise eletrodomestico_not_found_error()
@@ -51,39 +62,50 @@ def get_item(
         if not comodo:
             raise comodo_not_found_error()
 
-        eletrodomesticos_do_comodo = DispositivoEletrico.select().where(DispositivoEletrico.comodo == item_id)
+        eletrodomesticos_do_comodo = DispositivoEletrico.select().where(
+            DispositivoEletrico.comodo == item_id
+        )
 
         return list(eletrodomesticos_do_comodo)
 
     elif item_type == EnumGetEletrodomesticos.residencia:
 
-        residencia  = Residencia.get_or_none(Residencia.id == item_id)
+        residencia = Residencia.get_or_none(Residencia.id == item_id)
 
         if not residencia:
             raise residencia_not_found_error()
 
-        eletrodomesticos_da_residencia = DispositivoEletrico.select().where(DispositivoEletrico.residencia == item_id)
+        eletrodomesticos_da_residencia = DispositivoEletrico.select().where(
+            DispositivoEletrico.residencia == item_id
+        )
 
         return list(eletrodomesticos_da_residencia)
 
 
-@router.put("/{eletrodomestico_id}", response_model=EletrodomesticoRead)
-def update_eletrodomestico(eletrodomestico_id: int, eletrodomestico_update: EletrodomesticoUpdate):
-    eletrodomestico_db = DispositivoEletrico.get_or_none(DispositivoEletrico.id == eletrodomestico_id)
+@router.put('/{eletrodomestico_id}', response_model=EletrodomesticoRead)
+def update_eletrodomestico(
+        eletrodomestico_id: int, eletrodomestico_update: EletrodomesticoUpdate
+):
+    eletrodomestico_db = DispositivoEletrico.get_or_none(
+        DispositivoEletrico.id == eletrodomestico_id
+    )
 
     if not eletrodomestico_db:
         return eletrodomestico_not_found_error()
 
     update_data = eletrodomestico_update.model_dump(exclude_unset=True)
-    DispositivoEletrico.update(**update_data).where(DispositivoEletrico.id == eletrodomestico_id).execute()
+    DispositivoEletrico.update(**update_data).where(
+        DispositivoEletrico.id == eletrodomestico_id
+    ).execute()
 
     return DispositivoEletrico.get_by_id(eletrodomestico_id)
 
 
-@router.delete("/{eletrodomestico_id}")
+@router.delete('/{eletrodomestico_id}')
 def delete_eletrodomestico(eletrodomestico_id: int):
-
-    eletrodomestico = DispositivoEletrico.get_or_none(DispositivoEletrico.id == eletrodomestico_id)
+    eletrodomestico = DispositivoEletrico.get_or_none(
+        DispositivoEletrico.id == eletrodomestico_id
+    )
 
     if not eletrodomestico:
         return eletrodomestico_not_found_error()

@@ -8,8 +8,8 @@ from routers.residencia import router as residencia_router
 
 app = FastAPI()
 
-app.add_event_handler("startup", startup_db)
-app.add_event_handler("shutdown", shutdown_db)
+app.add_event_handler('startup', startup_db)
+app.add_event_handler('shutdown', shutdown_db)
 
 app.include_router(residencia_router)
 app.include_router(comodo_router)

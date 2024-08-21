@@ -7,9 +7,10 @@ from utils.enuns import EnumGetComodos
 from utils.erros import comodo_not_found_error, residencia_not_found_error
 from utils.messages import comodo_deleted_message
 
-router = APIRouter(prefix="/comodos", tags=["Cômodos"])
+router = APIRouter(prefix='/comodos', tags=['Cômodos'])
 
-@router.post("/", response_model=ComodoRead)
+
+@router.post('/', response_model=ComodoRead)
 def create_comodo(comodo: ComodoCreate):
 
     residencia = Residencia.get_or_none(Residencia.id == comodo.residencia_id)
@@ -21,7 +22,7 @@ def create_comodo(comodo: ComodoCreate):
     return new_comodo
 
 
-@router.put("/{comodo_id}", response_model=ComodoRead)
+@router.put('/{comodo_id}', response_model=ComodoRead)
 def update_comodo(comodo_id: int, comodo_data: ComodoUpdate):
 
     comodo = Comodo.get_or_none(Comodo.id == comodo_id)
@@ -34,7 +35,8 @@ def update_comodo(comodo_id: int, comodo_data: ComodoUpdate):
 
     return comodo
 
-@router.delete("/{comodo_id}")
+
+@router.delete('/{comodo_id}')
 def delete_comodo(comodo_id: int):
 
     comodo = Comodo.get_or_none(Comodo.id == comodo_id)
@@ -45,7 +47,8 @@ def delete_comodo(comodo_id: int):
     comodo.delete_instance()
     return comodo_deleted_message()
 
-@router.get("/", response_model=ComodoRead | list[ComodoRead])
+
+@router.get('/', response_model=ComodoRead | list[ComodoRead])
 def get_comodos_by_residencia(
         item_type: EnumGetComodos = Query(...),
         item_id: int = Query(...),

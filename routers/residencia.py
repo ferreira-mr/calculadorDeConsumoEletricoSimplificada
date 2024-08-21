@@ -1,21 +1,26 @@
 from fastapi import APIRouter, Query
 
 from models.residencia import Residencia
-from schemas.residencia import (ResidenciaCreate, ResidenciaRead,
-                                ResidenciaUpdate)
+from schemas.residencia import (
+    ResidenciaCreate,
+    ResidenciaRead,
+    ResidenciaUpdate,
+)
 from utils.erros import residencia_not_found_error
 from utils.messages import residenci_deleted_message
 
-router = APIRouter(prefix="/residencias", tags=["Residências"])
+router = APIRouter(prefix='/residencias', tags=['Residências'])
 
-@router.post("/", response_model=ResidenciaRead)
+
+@router.post('/', response_model=ResidenciaRead)
 def create_residencia(residencia: ResidenciaCreate):
 
     new_residencia = Residencia.create(**residencia.model_dump())
 
     return new_residencia
 
-@router.get("/", response_model=ResidenciaRead | list[ResidenciaRead])
+
+@router.get('/', response_model=ResidenciaRead | list[ResidenciaRead])
 def get_residencia(
         residencia_id: int | None = Query(None),
 ):
@@ -32,7 +37,7 @@ def get_residencia(
     return residencias
 
 
-@router.put("/{residencia_id}", response_model=ResidenciaRead)
+@router.put('/{residencia_id}', response_model=ResidenciaRead)
 def update_residencia(residencia_id: int, residencia_data: ResidenciaUpdate):
 
     residencia = Residencia.get_or_none(Residencia.id == residencia_id)
@@ -40,12 +45,15 @@ def update_residencia(residencia_id: int, residencia_data: ResidenciaUpdate):
     if not residencia:
         return residencia_not_found_error()
 
-    residencia.proprietario = residencia_data.proprietario or residencia.proprietario
+    residencia.proprietario = (
+            residencia_data.proprietario or residencia.proprietario
+    )
     residencia.save()
 
     return residencia
 
-@router.delete("/{residencia_id}")
+
+@router.delete('/{residencia_id}')
 def delete_residencia(residencia_id: int):
 
     residencia = Residencia.get_or_none(Residencia.id == residencia_id)
@@ -56,6 +64,3 @@ def delete_residencia(residencia_id: int):
     residencia.delete_instance()
 
     return residenci_deleted_message()
-
-
-

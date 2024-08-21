@@ -7,8 +7,10 @@ class ComodoCreate(BaseModel):
     nome: str
     residencia_id: int
 
+
 class ComodoUpdate(BaseModel):
     nome: str | None
+
 
 class ComodoRead(BaseModel):
     id: int

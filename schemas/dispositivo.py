@@ -8,10 +8,12 @@ class EletrodomesticoCreate(BaseModel):
     consumo: float = Field(..., gt=0)
     uso_diario: float = Field(..., ge=0, le=24)
 
+
 class EletrodomesticoUpdate(BaseModel):
     nome: str | None
     consumo: int | None = Field(None, gt=0)
     uso_diario: int | None = Field(None, ge=0, le=24)
+
 
 class EletrodomesticoRead(BaseModel):
     id: int
